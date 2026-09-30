@@ -1,0 +1,11 @@
+@Server_HostAddress = http://localhost:5037
+
+GET {{Server_HostAddress}}/api/AzureBlobStorage/GetResume
+Accept: application/json
+
+###
+
+GET {{Server_HostAddress}}/api/AzureBlobStorage/GetProfilePicture
+Accept: application/json
+
+###
