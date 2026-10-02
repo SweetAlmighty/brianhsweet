@@ -38,14 +38,14 @@ public class AzureBlobStorageService(IOptionsMonitor<ApplicationSettings> applic
 
         try
         {
-            var containerClient = blobServiceClient.GetBlobContainerClient(ContainerName);
-            return containerClient.GetBlobClient(blobName);
+            return blobServiceClient
+                .GetBlobContainerClient(ContainerName)
+                .GetBlobClient(blobName);
         }
         catch (Exception ex)
         {
             throw new InvalidOperationException($"Error retrieving blob '{blobName}' from container '{ContainerName}': {ex.Message}", ex);
         }
-
     }
 
     private AzureBlobStorageSettings GetAzureBlobStorageSettings()
