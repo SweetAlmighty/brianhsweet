@@ -193,4 +193,13 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 
+# IDE / user-specific files
+.vs/
+.idea/
+*.user
+*.suo
+*.rsuser
+.vscode/*
+!.vscode/extensions.json
+
 appsettings.Development.json

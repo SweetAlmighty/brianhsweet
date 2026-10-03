@@ -5,9 +5,7 @@ const Playing: React.FC = () => {
     <section>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <h2>Under Construction</h2>
-        <p>
-          Check back soon for updates on my game backlog progress!
-        </p>
+        <p>Check back soon for updates on my game backlog progress!</p>
       </div>
     </section>
   );

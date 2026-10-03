@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 import Body from './Components/Body';
 import Header from './Components/Header';
 
@@ -8,7 +8,7 @@ function App() {
       <Header />
       <Body />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

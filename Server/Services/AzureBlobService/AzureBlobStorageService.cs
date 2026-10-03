@@ -50,8 +50,8 @@ public class AzureBlobStorageService(IOptionsMonitor<ApplicationSettings> applic
 
     private AzureBlobStorageSettings GetAzureBlobStorageSettings()
     {
-        if (_applicationSettings == null || 
-            _applicationSettings.CurrentValue == null || 
+        if (_applicationSettings == null ||
+            _applicationSettings.CurrentValue == null ||
             _applicationSettings.CurrentValue.AzureBlobStorage == null)
         {
             throw new InvalidOperationException($"{nameof(AzureBlobStorageService)} : Application settings are not available.");

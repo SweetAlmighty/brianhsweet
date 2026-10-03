@@ -10,10 +10,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import Endpoints from '../../Utilities/Endpoints';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
 const Resume: React.FC = () => {
   const [numPages, setNumPages] = useState<number>();
@@ -31,20 +28,20 @@ const Resume: React.FC = () => {
       fileDownload(resumeFile, resumeName);
     }
   };
-  
+
   const handleChange = (blob: Blob) => {
     setResumeFile(new File([blob], resumeName, { type: 'application/pdf' }));
-  }
+  };
 
   useEffect(() => {
-    Fetch({ endpoint: Endpoints.GetResume, onFetch: handleChange});
+    Fetch({ endpoint: Endpoints.GetResume, onFetch: handleChange });
   }, []);
 
   return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2>Resume</h2>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h2>Resume</h2>
 
-        {resumeFile ? (
+      {resumeFile ? (
         <>
           <p>
             You can view my resume below or download it{' '}
@@ -68,10 +65,9 @@ const Resume: React.FC = () => {
             defaultCurrent={pageNumber}
           />
         </>
-        ) : (
-          <FontAwesomeIcon icon={faSpinner} spin />
-        )}
-
+      ) : (
+        <FontAwesomeIcon icon={faSpinner} spin />
+      )}
     </div>
   );
 };

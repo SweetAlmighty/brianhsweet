@@ -1,9 +1,9 @@
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Server.Services.AzureBlobService;
 using Server.Settings;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 
 namespace Server.Controllers;
 
@@ -52,9 +52,9 @@ public class AzureBlobStorageController(IOptionsMonitor<ApplicationSettings> app
 
             return await GetBlob(ProfilePictureBlobName);
         }
-        catch (Exception ex)
+        catch
         {
-            return StatusCode(500, $"Error retrieving profile picture blob name from configuration: {ex.Message}");
+            return StatusCode(500, "Error retrieving profile picture.");
         }
     }
 
@@ -74,9 +74,9 @@ public class AzureBlobStorageController(IOptionsMonitor<ApplicationSettings> app
 
             return await GetBlob(ResumeBlobName);
         }
-        catch (Exception ex)
+        catch
         {
-            return StatusCode(500, $"Error retrieving resume blob name from configuration: {ex.Message}");
+            return StatusCode(500, "Error retrieving resume.");
         }
     }
 
