@@ -1,16 +1,22 @@
 using Server.Services.AzureBlobService;
 using Server.Settings;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+CorsSettings corsSettings = builder.Configuration
+    .GetSection(nameof(ApplicationSettings))
+    .GetSection(CorsSettings.SectionName)
+    .Get<CorsSettings>()
+    ?? throw new InvalidOperationException("CORS settings are not configured.");
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173", "https://brianhsweet.com")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+            .WithOrigins(corsSettings.AllowedOrigins)
+            .WithMethods(HttpMethods.Get)
+            .AllowAnyHeader();
     });
 });
 
@@ -23,7 +29,7 @@ builder.Services.AddControllers();
 // Custom configuration and registration
 builder.Services.ConfigureApplicationSettings(builder.Configuration);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseHttpsRedirection();
 

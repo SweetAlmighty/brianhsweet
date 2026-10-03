@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Server.Services.AzureBlobService;
 using Server.Settings;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace Server.Controllers;
 
@@ -25,14 +27,14 @@ public class AzureBlobStorageController(IOptionsMonitor<ApplicationSettings> app
     private readonly IOptionsMonitor<ApplicationSettings> _applicationSettings = applicationSettings;
 
     /// <summary>
-    /// The name of the blob for the profile picture, including the file extension, retrieved from the current configuration settings. This property is used to specify which blob to access when retrieving the profile picture from Azure Blob Storage.
-    /// </summary>
-    private string ProfilePictureBlobName => GetAzureBlobStorageSettings().ProfilePictureBlobName;
-
-    /// <summary>
     /// The name of the blob for the resume, including the file extension, retrieved from the current configuration settings. This property is used to specify which blob to access when retrieving the resume from Azure Blob Storage.
     /// </summary>
     private string ResumeBlobName => GetAzureBlobStorageSettings().ResumeBlobName;
+
+    /// <summary>
+    /// The name of the blob for the profile picture, including the file extension, retrieved from the current configuration settings. This property is used to specify which blob to access when retrieving the profile picture from Azure Blob Storage.
+    /// </summary>
+    private string ProfilePictureBlobName => GetAzureBlobStorageSettings().ProfilePictureBlobName;
 
     /// <summary>
     /// Endpoint to retrieve the profile picture blob from Azure Blob Storage and returns it as a file response.
@@ -86,10 +88,10 @@ public class AzureBlobStorageController(IOptionsMonitor<ApplicationSettings> app
     /// <returns>An <see cref="IActionResult"/> containing the requested blob file.</returns>
     private async Task<IActionResult> GetBlob(string blobName)
     {
-        var blobServiceClient = _azureBlobStorageService.GetBlobClient(blobName)
+        BlobClient blobServiceClient = _azureBlobStorageService.GetBlobClient(blobName)
             ?? throw new InvalidOperationException("Application settings are not available.");
 
-        var response = await blobServiceClient.DownloadStreamingAsync();
+        Azure.Response<BlobDownloadStreamingResult> response = await blobServiceClient.DownloadStreamingAsync();
 
         if (response == null || response.Value.Content == null)
         {

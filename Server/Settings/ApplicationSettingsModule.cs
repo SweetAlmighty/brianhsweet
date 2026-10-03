@@ -13,10 +13,11 @@ public static class ApplicationSettingsModule
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<ApplicationSettings>(
-            configuration.GetSection(nameof(ApplicationSettings))
-        );
+        IConfigurationSection applicationSettingsSection = configuration.GetSection(nameof(ApplicationSettings));
 
-        return services.Configure<AzureBlobStorageSettings>(configuration.GetSection(AzureBlobStorageSettings.SectionName));
+        return services
+            .Configure<ApplicationSettings>(applicationSettingsSection)
+            .Configure<CorsSettings>(applicationSettingsSection.GetSection(CorsSettings.SectionName))
+            .Configure<AzureBlobStorageSettings>(applicationSettingsSection.GetSection(AzureBlobStorageSettings.SectionName));
     }
 }
