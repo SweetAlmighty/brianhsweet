@@ -9,11 +9,12 @@ const About: React.FC = () => {
       </div>
 
       <p>
-        I'm a software engineer and former certified Scrum Master with a passion for building technology, solving problems,
-        and turning ideas into working experiences. After graduating from Full Sail University in 2014, I've spent my career
-        continually exploring new technologies and ways improve how teams build products. I've work on a wide-range of
-        applications, including web-based product configurators with AR capabilities, 3D simulations for the U.S. Navy
-        and the Department of Defense, and Enterprise-scale internal Human Resource applications and services.
+        I'm a software engineer and former certified Scrum Master with a passion for building technology, solving
+        problems, and turning ideas into working experiences. After graduating from Full Sail University in 2014, I've
+        spent my career continually exploring new technologies and ways improve how teams build products. I've work on a
+        wide-range of applications, including web-based product configurators with AR capabilities, 3D simulations for
+        the U.S. Navy and the Department of Defense, and Enterprise-scale internal Human Resource applications and
+        services.
       </p>
 
       <p>
