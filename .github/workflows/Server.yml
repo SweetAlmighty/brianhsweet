@@ -1,4 +1,4 @@
-name: Server - Build and Deploy
+name: Server
 
 on:
   push:
@@ -23,6 +23,7 @@ jobs:
   build:
     if: github.event_name == 'push' || github.event.action != 'closed'
     runs-on: windows-latest
+    name: Build
     permissions:
       contents: read
       id-token: write
@@ -64,9 +65,10 @@ jobs:
     if: github.event_name == 'push'
     runs-on: windows-latest
     needs: build
+    name: Deploy
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
