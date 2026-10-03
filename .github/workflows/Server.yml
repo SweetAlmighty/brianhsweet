@@ -1,4 +1,4 @@
-name: Azure Web App CI/CD
+name: Server - Build and Deploy
 
 on:
   push:
