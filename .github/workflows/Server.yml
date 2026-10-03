@@ -4,16 +4,24 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'Server/**'
+      - 'global.json'
+      - '.editorconfig'
+      - '.github/workflows/Server.yml'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
     paths:
       - 'Server/**'
+      - 'global.json'
+      - '.editorconfig'
       - '.github/workflows/Server.yml'
 
 jobs:
   build:
+    if: github.event_name == 'push' || github.event.action != 'closed'
     runs-on: windows-latest
     permissions:
       contents: read
@@ -40,6 +48,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build Server --configuration Release
 
+      - name: Verify formatting
+        run: dotnet format Server --verify-no-changes --no-restore
+
       - name: dotnet publish
         run: dotnet publish Server -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
@@ -50,6 +61,7 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
+    if: github.event_name == 'push'
     runs-on: windows-latest
     needs: build
     permissions:
@@ -61,7 +73,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -76,4 +88,3 @@ jobs:
           app-name: 'BHSBackend'
           slot-name: 'Production'
           package: .
-          
